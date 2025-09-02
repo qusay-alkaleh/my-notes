@@ -14,7 +14,11 @@ import { formatArabicDate } from "@/lib/date-time";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 
-const UserSummary: React.FC<NoteDomain> = ({
+interface Props extends NoteDomain {
+  className?: string;
+}
+
+const UserSummary: React.FC<Props> = ({
   content,
   created_at,
   updated_at,
@@ -23,6 +27,7 @@ const UserSummary: React.FC<NoteDomain> = ({
   phone,
   public_id,
   title,
+  className = "w-full md:w-1/2",
 }) => {
   const SUMMARY_FIELDS = [
     { label: "اسم الشخص الكامل", value: full_name, icon: FiUser },
@@ -38,7 +43,7 @@ const UserSummary: React.FC<NoteDomain> = ({
   ];
 
   return (
-    <Card className="w-full md:w-1/2 shadow-md border border-gray-200">
+    <Card className={cn("shadow-md border border-gray-200", className)}>
       <CardHeader>
         <CardTitle className="text-lg flex justify-between items-center gap-2">
           <div className="flex items-center gap-1">

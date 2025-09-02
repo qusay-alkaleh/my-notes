@@ -11,12 +11,16 @@ import {
 } from "@/services/note.service";
 import { DEFAULT_NOTE_TITLES } from "@/constants/note";
 import { cn } from "@/lib/utils";
+import UserSummary from "@/components/root/user-summary";
+import { Eye } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 export default function TrackPage() {
   const [code, setCode] = useState("");
   const [note, setNote] = useState<NoteDomain | null>(null);
   const [loading, setLoading] = useState(false);
   const [noteSteps, setNoteSteps] = useState<NoteStepDomain[]>([]);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleTrack = async () => {
     if (code.length !== 5)
@@ -48,7 +52,7 @@ export default function TrackPage() {
   };
 
   return (
-    <section className="max-container p-6 h-[calc(100vh-8rem)]">
+    <section className="max-container p-6 min-h-[calc(100vh-8rem)]">
       <Card className="max-w-3xl mx-auto">
         <CardHeader>
           <CardTitle>تتبع حالة ملاحظتك</CardTitle>
@@ -70,8 +74,20 @@ export default function TrackPage() {
 
           {note && (
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold">{note.title}</h2>
-              <p className="text-gray-700">{note.content}</p>
+              <div className="w-full">
+                <Button
+                  className="w-full"
+                  variant="outline"
+                  onClick={() => setOpenDialog(!openDialog)}
+                >
+                  <Eye className="size-5 ml-1" />
+                  اظهار ملخص الملاحظة
+                </Button>
+
+                {openDialog && (
+                  <UserSummary className="w-full" {...(note as NoteDomain)} />
+                )}
+              </div>
 
               <div className="mt-6 space-y-4">
                 {noteSteps.map((step, index) => {
