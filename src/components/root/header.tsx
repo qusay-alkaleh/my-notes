@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { buttonVariants } from "../ui/button";
-import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { Menu, X, ArrowLeft } from "lucide-react";
+import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const ROUTES = [
     { name: "تتبع الملاحظة", href: "/track" },
     { name: "من نحن", href: "#about-us" },
@@ -16,38 +19,65 @@ const Header = () => {
 
   return (
     <header className="max-container">
-      <nav className="bg-transparent border-gray-200 px-4 lg:px-6 py-2.5">
+      <nav className="bg-transparent border-b border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto">
           <Link href="/" className="flex items-center">
             <Image src={"/logo.svg"} width={152} height={56} alt="logo" />
           </Link>
 
-          <div
-            className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-            id="mobile-menu-2"
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden text-gray-700 hover:text-primary-600 focus:outline-none"
+            aria-label="Toggle menu"
           >
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-              {ROUTES.map((route) => (
-                <Link
-                  href={route.href}
-                  key={route.href}
-                  className="block py-2 pr-4 pl-3 text-gray-600 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0"
-                >
-                  {route.name}
-                </Link>
-              ))}
-            </ul>
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+
+          <div className="hidden md:flex items-center space-x-6 rtl:space-x-reverse">
+            {ROUTES.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                className="text-gray-600 hover:text-primary-600 transition font-medium"
+              >
+                {route.name}
+              </Link>
+            ))}
           </div>
-          <div className="flex items-center lg:order-2">
-            <Link
-              href="/submit"
-              className={cn(buttonVariants(), "hidden sm:inline-flex")}
-            >
+
+          <div className="hidden md:inline-flex lg:order-2">
+            <Link href="/submit" className={cn(buttonVariants())}>
               انشاء ملاحظة
               <ArrowLeft className="ml-1" />
             </Link>
           </div>
         </div>
+
+        {isOpen && (
+          <div className="lg:hidden mt-4 space-y-2">
+            {ROUTES.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                onClick={() => setIsOpen(false)}
+                className="block text-gray-700 hover:text-primary-600 px-2 py-2 rounded transition font-medium"
+              >
+                {route.name}
+              </Link>
+            ))}
+            <Link
+              href="/submit"
+              className={cn(
+                buttonVariants({}),
+                "w-full justify-center flex mt-2"
+              )}
+              onClick={() => setIsOpen(false)}
+            >
+              انشاء ملاحظة
+              <ArrowLeft className="ml-1" />
+            </Link>
+          </div>
+        )}
       </nav>
     </header>
   );

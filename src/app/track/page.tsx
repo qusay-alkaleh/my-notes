@@ -12,7 +12,7 @@ import {
 import { DEFAULT_NOTE_TITLES } from "@/constants/note";
 import { cn } from "@/lib/utils";
 import UserSummary from "@/components/root/user-summary";
-import { Eye } from "lucide-react";
+import { Eye, Search } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 export default function TrackPage() {
@@ -68,6 +68,7 @@ export default function TrackPage() {
               className="tracking-widest"
             />
             <Button onClick={handleTrack} disabled={loading}>
+              <Search className="size-5 ml-1" />
               {loading ? "جاري البحث..." : "تتبع الملاحظة"}
             </Button>
           </div>
