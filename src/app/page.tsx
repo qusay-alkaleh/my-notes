@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="relative isolate px-6 pt-14 lg:px-8 z-[-100]">
+    <div className="relative isolate px-6 pt-14 lg:px-8">
       <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
         <div className="text-center">
           <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-700 sm:text-7xl">
@@ -13,7 +14,9 @@ export default function Home() {
             ملاحظاتك من أي مكان وفي أي وقت.
           </p>
           <div className="mt-10 flex items-center justify-center">
-            <Button size={"lg"}>ابدأ الآن</Button>
+            <Link href="/submit" className={buttonVariants({ size: "lg" })}>
+              ابدأ الآن
+            </Link>
           </div>
         </div>
       </div>
