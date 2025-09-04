@@ -30,7 +30,7 @@ export default function RootLayout({
         <main className="relative">
           <div
             aria-hidden="true"
-            className="absolute inset-x-0 -top-40 -z-50 transform-gpu overflow-hidden blur-3xl sm:-top-50"
+            className="absolute inset-x-0 top-0 -z-50 transform-gpu overflow-hidden blur-3xl sm:-top-50"
           >
             <div
               style={{
